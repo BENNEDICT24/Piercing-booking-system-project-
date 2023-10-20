@@ -1,0 +1,261 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+
+class  SignUp extends JFrame{
+    JTextField t1,t2;
+    JButton b1;
+
+//You need to signUp before logging in, so that you can be recognised by the gui program
+    SignUp(){
+        setLayout(null);
+        t1=new JTextField(60);
+        t2=new JPasswordField(60);
+        b1=new JButton("Submit");
+
+        t1.setBounds(100,20,80,30);
+        t2.setBounds(100,60,80,30);
+        b1.setBounds(100,100,80,30);
+
+        b1.addActionListener(new ActionListener() {
+            @Override
+            //this method reads in your username and password and stores them in a text file called login
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    FileWriter myWriter = new FileWriter("login.txt");
+                    myWriter.write(t1.getText()+"\t"+t2.getText()+"\n");
+
+                    myWriter.close();
+                    JFrame f =new JFrame();
+                    JOptionPane.showMessageDialog(f,"Registration Completed");
+                    dispose();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
+        add(t1);
+        add(t2);
+        add(b1);
+
+
+    }
+
+
+
+
+
+
+}
+
+class Login extends JFrame {
+    JTextField t1, t2;
+    JButton b1, b2;
+    JLabel l1, l2;
+
+    //after signing up you need to use those details that you signed up with to login
+    Login() {
+        setLayout(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        l1 = new JLabel("Login");
+
+        l1.setFont(new Font("Times New Roman", Font.BOLD, 30));
+        l1.setBounds(130, 10, 300, 30);
+        add(l1);
+
+        t1 = new JTextField(60);
+        t2 = new JPasswordField(60);
+        b1 = new JButton("Sign In");
+        b2 = new JButton("Sign Up");
+
+        t1.setBounds(100,60,120,30);
+        t2.setBounds(100,100,120,30);
+        b1.setBounds(120,140,80,30);
+        b2.setBounds(120,170,80,30);
+        l2=new JLabel("");
+        l2.setBounds(250,80,300,30);
+        add(l2);
+
+        add(t1);
+        add(t2);
+        add(b1);
+        add(b2);
+
+        b1.addActionListener(new ActionListener() {
+            @Override
+            //this method reads in the username and password you typed,that is stored in the text file and if it matches you'll be able to proceed with your program
+            public void actionPerformed(ActionEvent e) {
+                boolean matched=false;
+                String username=t1.getText().toString();
+                String password=t2.getText().toString();
+                try{
+                    FileReader file=new FileReader("login.txt");
+                    BufferedReader myReader =new BufferedReader(file);
+                    String line;
+
+                    while((line= myReader.readLine())!=null){
+                        if (line.equals(username+"\t"+password)){
+                            matched=true;
+                            break;
+                        }
+                    }
+                    myReader.close();
+                }
+
+                catch (IOException exception){
+                    System.out.println("An error occured");
+                    exception.printStackTrace();
+                }
+                if (matched){
+                    dispose();
+                    MYGUI gui=new MYGUI();
+
+                }
+                else {
+                    l2.setText("Invalid Username or password");
+                }
+
+            }
+        });
+
+        b2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SignUp s = new SignUp();
+                s.setVisible(true);
+                s.setBounds(200,200,500,300);
+            }
+        });
+
+
+    }
+}
+//Main class
+public class Registering{
+    public static void main(String[] args){
+        Login l =new Login();
+        l.setBounds(400,200,500,300);
+        l.setVisible(true);
+    }
+
+
+}
+// this class is for when you're are done login in you need to register your details.
+class MYGUI extends JFrame {
+    private JLabel nameLabel;
+    private JTextField nameText;
+    private JLabel surnameLabel;
+    private JTextField surnameText;
+    private JLabel studentNumberLabel;
+    private JTextField studentNumberText;
+    private JLabel contactsLabel;
+    private JTextField contactsText;
+    private JLabel emailLabel;
+    private JTextField emailText;
+    private JLabel passwordLabel;
+    private JPasswordField passwordText;
+
+    public MYGUI() {
+        JPanel panel = new JPanel();
+        setSize(350, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        add(panel);
+
+        panel.setLayout(null);
+
+        // Name
+        nameLabel = new JLabel("Name");
+        nameLabel.setBounds(10, 20, 80, 25);
+        panel.add(nameLabel);
+
+        nameText = new JTextField(20);
+        nameText.setBounds(120, 20, 165, 25);
+        panel.add(nameText);
+
+        // SURNAME
+        surnameLabel = new JLabel("Surname");
+        surnameLabel.setBounds(10, 50, 80, 25);
+        panel.add(surnameLabel);
+
+        surnameText = new JTextField(20);
+        surnameText.setBounds(120, 50, 165, 25);
+        panel.add(surnameText);
+
+        // STUDENT NUMBER
+        studentNumberLabel = new JLabel("Student Number");
+        studentNumberLabel.setBounds(10, 80, 100, 25);
+        panel.add(studentNumberLabel);
+
+        studentNumberText = new JTextField(20);
+        studentNumberText.setBounds(120, 80, 165, 25);
+        panel.add(studentNumberText);
+
+        // CONTACTS
+        contactsLabel = new JLabel("Contacts");
+        contactsLabel.setBounds(10, 110, 80, 25);
+        panel.add(contactsLabel);
+
+        contactsText = new JTextField(20);
+        contactsText.setBounds(120, 110, 165, 25);
+        panel.add(contactsText);
+
+        emailLabel = new JLabel("Email");
+        emailLabel.setBounds(10, 140, 80, 25);
+        panel.add(emailLabel);
+
+        emailText = new JTextField(20);
+        emailText.setBounds(120, 140, 165, 25);
+        panel.add(emailText);
+
+        passwordLabel = new JLabel("Password");
+        passwordLabel.setBounds(10, 170, 80, 25);
+        panel.add(passwordLabel);
+
+        passwordText = new JPasswordField(20);
+        passwordText.setBounds(120, 170, 165, 25);
+        panel.add(passwordText);
+
+        JButton button = new JButton("Register");
+        button.setBounds(85, 210, 165, 25);
+        panel.add(button);
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = nameText.getText();
+                String surname = surnameText.getText();
+                String studentNumber = studentNumberText.getText();
+                String contacts = contactsText.getText();
+                String email = emailText.getText();
+                String password = new String(passwordText.getPassword());
+
+                String userDetails = "Name: " + name + "\nSurname: " + surname + "\nStudent Number: " + studentNumber + "\nContacts: " + contacts + "\nEmail: " + email + "\nPassword: " + password + "\n\nYou've successfully registered";
+
+                // Display the user details in a dialog
+                JOptionPane.showMessageDialog(MYGUI.this, userDetails);
+
+                // Write user details to a file
+                writeUserDetailsToFile(name, surname, studentNumber, contacts, email, password);
+            }
+        });
+
+        setVisible(true);
+    }
+
+    private void writeUserDetailsToFile(String name, String surname, String studentNumber, String contacts, String email, String password) {
+        try {
+            FileWriter writer = new FileWriter("PersonalDetails.txt", true); // Use 'true' to append to the file
+            writer.write(name + ", " + surname + ", " + studentNumber + ", " + contacts + ", " + email + ", " + password + "\n");
+            writer.close();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+}
