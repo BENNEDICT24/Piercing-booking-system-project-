@@ -1,0 +1,169 @@
+import java.util.Scanner;
+class Sprint3Task1_4226279 {
+    public static void main(String[] args) {
+        Customer customer = new Customer();
+        TypeofPiercing piercing=new TypeofPiercing();
+
+        Scanner sc = new Scanner(System.in);
+        String Done="no";
+
+       do {
+            System.out.println("Please enter your name:");
+            String name = sc.nextLine();
+            customer.setName(name);
+
+            System.out.println("Please enter your surname:");
+            String surname = sc.nextLine();
+            customer.setSurname(surname);
+
+            System.out.println("Please enter your email:");
+            String email = sc.nextLine();
+            customer.setEmail(email);
+
+
+            System.out.println("Please enter your gender (type Female or Male):");
+            String gender = sc.nextLine();
+            if(gender.toLowerCase().equals("female")|| gender.toLowerCase().equals("male")){
+                customer.setGender(name);
+
+            }
+            else {
+                System.out.println("The gender you've entered is not recognised,PLEASE FOLLOW THE INSTRUCTIONS");
+                break;
+
+            }
+
+
+
+            System.out.println("Please enter your age:");
+            int age = sc.nextInt();
+            customer.setAge(age);
+            sc.nextLine();
+            System.out.println("Enter the type of piercing, this are the available piercings (NOSE ,EARLOBE ,BELLY ,TONGUE,EYEBROW OR SEPTUM)choose");
+            String nm=sc.nextLine();  // nm represents the name of the piercing
+           if(nm.toLowerCase().equals("nose,belly,tongue,eyebrow,septum")|| (nm.toLowerCase().equals("earlobe"))|| (nm.toLowerCase().equals("belly"))||(nm.toLowerCase().equals("tongue"))||(nm.toLowerCase().equals("eyebrow"))|| (nm.toLowerCase().equals("septum"))){
+               piercing.setName(nm);
+               System.out.println("");
+
+           }
+           else{
+               System.out.println("the type of piercing "+nm+ " is not available");
+               break;
+           }
+
+            customer.printInfo();
+            piercing.printInfo();
+            System.out.println("");
+            Done="yes";
+
+
+
+
+
+
+        } while(Done.toLowerCase().equals("no"));
+
+
+
+    }
+}
+
+
+public class Customer {
+
+    private String name;
+    private String surname;
+    private String email;
+    private String gender;
+    private int age;
+
+
+    public void Customer(String name,String surname,String email,String gender,int age){
+        this.name=name;
+        this.surname=surname;
+        this.email=email;
+        this.gender=gender;
+        this.age=age;
+
+
+    }
+
+
+    public void setName(String name){
+        this.name=name;
+    }
+    public void setSurname(String surname){
+        this.surname=surname;
+    }
+    public void setEmail(String email){
+        this.email=email;
+    }
+    public void setGender(String gender){
+        this.gender=gender;
+    }
+    public void setAge(int age){
+        this.age=age;
+    }
+
+
+
+    public String getName(){
+        return name;
+    }
+
+
+    public String getSurname(){
+        return surname;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public String getGender(){
+        return gender;
+    }
+
+    public int getAge(){
+        return age;
+    }
+
+    public void printInfo(){
+        System.out.println("Name: "+this.name);
+        System.out.println("Surname: "+this.surname);
+        System.out.println("Email: "+this.email);
+        System.out.println("Gender: "+this.gender);
+        System.out.println("age: "+this.age);
+    }
+
+}
+
+
+public class TypeofPiercing {
+
+    private String name;
+
+    public TypeofPiercing(){
+        this.name=name;
+    }
+
+
+
+    public TypeofPiercing(String name){
+        this.name=name;
+    }
+
+    public void setName(String name){
+        this.name=name;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+
+    public void printInfo(){
+        System.out.println("You've opted for "+getName()+ " piercing");
+    }
+
+}
